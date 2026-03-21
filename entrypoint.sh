@@ -9,7 +9,7 @@ export OSS_ACCESS_KEY_SECRET="$OSS_ACCESS_KEY_SECRET"
 
 # 2. 从 OSS 拉取用户项目代码
 echo "=== [entrypoint] Pulling code from OSS ==="
-ossutil cp "oss://$OSS_BUCKET/projects/$PROJECT_ID/" /workspace/ -r -f --endpoint "$OSS_ENDPOINT"
+ossutil cp "oss://$OSS_BUCKET/projects/$PROJECT_ID/" /workspace/ -r -f --endpoint "$OSS_ENDPOINT" --region cn-shenzhen
 
 # 3. 安装依赖
 if [ -f /workspace/scripts/prepare.sh ]; then
