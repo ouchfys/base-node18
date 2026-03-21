@@ -1,12 +1,16 @@
-FROM node:18-alpine
+FROM registry.cn-shenzhen.aliyuncs.com/china_hub/node:18-alpine
 
 # 预装高频全局包
-RUN npm install -g pnpm serve
+RUN npm config set registry https://registry.npmmirror.com && \
+    npm install -g pnpm serve
 
-# 安装 ossutil 用于从 OSS 拉取用户代码
-RUN apk add --no-cache bash curl && \
-    curl -o /usr/local/bin/ossutil64 https://gosspublic.alicdn.com/ossutil/1.7.18/ossutil-v1.7.18-linux-amd64/ossutil64 && \
-    chmod +x /usr/local/bin/ossutil64
+# 安装 ossutil2 用于从 OSS 拉取用户代码
+RUN apk add --no-cache bash curl unzip && \
+    curl -o /tmp/ossutil.zip https://gosspublic.alicdn.com/ossutil/v2/2.2.1/ossutil-2.2.1-linux-amd64.zip && \
+    unzip /tmp/ossutil.zip -d /tmp/ossutil && \
+    mv /tmp/ossutil/ossutil /usr/local/bin/ossutil && \
+    chmod +x /usr/local/bin/ossutil && \
+    rm -rf /tmp/ossutil /tmp/ossutil.zip
 
 # 工作目录
 WORKDIR /workspace

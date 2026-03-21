@@ -3,15 +3,13 @@ set -e
 
 echo "=== [entrypoint] Starting container for project: $PROJECT_ID ==="
 
-# 1. 配置 ossutil
-ossutil64 config \
-  -e "$OSS_ENDPOINT" \
-  -i "$OSS_ACCESS_KEY_ID" \
-  -k "$OSS_ACCESS_KEY_SECRET"
+# 1. 配置 ossutil 凭证（ossutil2 使用环境变量）
+export OSS_ACCESS_KEY_ID="$OSS_ACCESS_KEY_ID"
+export OSS_ACCESS_KEY_SECRET="$OSS_ACCESS_KEY_SECRET"
 
 # 2. 从 OSS 拉取用户项目代码
 echo "=== [entrypoint] Pulling code from OSS ==="
-ossutil64 cp "oss://$OSS_BUCKET/projects/$PROJECT_ID/" /workspace/ -r -f
+ossutil cp "oss://$OSS_BUCKET/projects/$PROJECT_ID/" /workspace/ -r -f --endpoint "$OSS_ENDPOINT"
 
 # 3. 安装依赖
 if [ -f /workspace/scripts/prepare.sh ]; then
