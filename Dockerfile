@@ -1,4 +1,4 @@
-FROM registry.cn-shenzhen.aliyuncs.com/china_hub/node:18-alpine
+FROM node:18-alpine
 
 # 预装高频全局包
 RUN npm config set registry https://registry.npmmirror.com && \
