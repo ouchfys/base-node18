@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM registry.cn-hangzhou.aliyuncs.com/library/node:18-alpine
 
 # 安装 Python 和系统依赖
 RUN apk add --no-cache python3 py3-pip bash curl unzip
